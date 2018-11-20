@@ -8,6 +8,7 @@ from plotly.graph_objs import *
 from dash.dependencies import Input, Output, State, Event
 import datetime
 from collections import defaultdict
+import pandas as pd
 
 import flask
 
@@ -169,11 +170,13 @@ def update_conversao(symbol):
         'low':  [value['3a. low ('+ symbol +')'] for value in values.values()],
         'close':  [value['4a. close ('+ symbol +')'] for value in values.values()],
         'type': 'candlestick',
-        'name': value,
-        'legendgroup': value
+        'name': symbol,
+        'legendgroup': symbol
     }
 
-    return Figure(data=[candlestick])
+    layout = {'title': 'Histórico do bitcoin para ' + symbol}
+
+    return Figure(data=[candlestick], layout=layout)
 
 if __name__ == '__main__':
     app.run_server(debug=True)
